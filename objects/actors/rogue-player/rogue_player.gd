@@ -12,14 +12,10 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _enter_tree():
 	print("enter tree", (str(name).to_int()))
 	set_multiplayer_authority(str(name).to_int())
-	$Camera2D.enabled = is_multiplayer_authority()
-	
+
 func _ready():
 	if not is_multiplayer_authority(): return
-	#if multiplayer.get_unique_id() == 1:
-		#$Camera2D.make_current()
-	#else:
-		#$Camera2D.enabled = false
+	$Camera2D.make_current()
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
