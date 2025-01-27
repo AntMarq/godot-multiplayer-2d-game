@@ -1,27 +1,33 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgv5v2fxqlswe"]
 
 [ext_resource type="Texture2D" uid="uid://dgicfoaiudxr1" path="res://assets/image/Objects/platforms.png" id="1_7q5sl"]
-[ext_resource type="Script" path="res://objects/coins/platform.gd" id="1_bwx77"]
+[ext_resource type="Script" path="res://objects/platform/platform.gd" id="1_bwx77"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ijbck"]
-properties/0/path = NodePath(".:position")
+properties/0/path = NodePath("..:progress")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13ihi"]
 size = Vector2(32, 8)
 
-[node name="Platform" type="AnimatableBody2D"]
+[node name="Path2D" type="Path2D"]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
 script = ExtResource("1_bwx77")
 
-[node name="PlatformSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="Platform" type="CharacterBody2D" parent="PathFollow2D"]
+
+[node name="PlatformSynchronizer" type="MultiplayerSynchronizer" parent="PathFollow2D/Platform"]
 replication_config = SubResource("SceneReplicationConfig_ijbck")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Platform"]
 texture = ExtResource("1_7q5sl")
 region_enabled = true
-region_rect = Rect2(16, 0, 32, 9)
+region_rect = Rect2(16, 0, 31.7107, 9)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Platform"]
 shape = SubResource("RectangleShape2D_13ihi")
 one_way_collision = true
